@@ -1,19 +1,16 @@
-// Payment Data (Variables)
-const customerName = "Braia SRE";
-const product = "Cloud Course";
-const amount = 150.00    ;
-const currency = "USD" ;
-const isSucces = true;
+try {
+     console.log("--- Payment System Status: BOOTING ---");
 
-console.log("--- Payment Processing System ---");
-console.log(`Customer: ${customerName}`);
-console.log(`Purchased: ${product}`);
-console.log(`Amount: ${amount} ${currency}`);
+        const amount = 150.00;
 
-if (isSucces){ 
-    console.log ("Status : PAYMENT APPROVED🚀")
- } else {
-    console.log("Status: PAYMENT FAILED! ❌");
+        console.log(`Processing payment of : ${amount} ${currency}`);
+}
+catch (error) {
+
+   console.log("[SRE ALERT] The system caught an error!");
+    console.log(`Error details: ${error.message}`);
+    
+} finally {
+    console.log("Cleaning up resources... System remains online.");
 }
 
-console.log("---------------------------------");
