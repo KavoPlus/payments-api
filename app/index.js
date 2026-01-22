@@ -1,32 +1,21 @@
-try {
-    // 1. Log de Início
+const http = require('http'); // 1. Carrega a ferramenta de rede
+
+// 2. Cria o servidor (o interfone)
+const server = http.createServer((req, res) => {
+    // Esse bloco roda toda vez que alguém acessar a API
     console.log(JSON.stringify({ 
         timestamp: new Date().toISOString(), 
         level: "INFO", 
-        message: "O sistema está ligando..." 
+        message: "Alguém chamou a API!" 
     }));
 
-    const amount = Number(process.env.AMOUNT) || 0;
-    const currency = process.env.CURRENCY;
+    res.end("Pagamento recebido!"); // Resposta que aparece no navegador
+});
 
-    if (!currency) {
-        throw new Error("Variável CURRENCY não foi encontrada!");
-    }
-
-    // 2. Log de Sucesso (Formulário preenchido)
-    console.log(JSON.stringify({
-        timestamp: new Date().toISOString(),
-        level: "INFO",
-        message: "Pagamento processado com sucesso",
-        data: { valor: amount, moeda: currency }
+// 3. Diz em qual "porta" o servidor vai ficar ouvindo
+server.listen(3000, () => {
+    console.log(JSON.stringify({ 
+        level: "INFO", 
+        message: "Servidor ligado na porta 3000" 
     }));
-
-} catch (error) {
-    // 3. Log de Erro (Caso algo falhe)
-    console.log(JSON.stringify({
-        timestamp: new Date().toISOString(),
-        level: "ERROR",
-        message: "Falha no pagamento",
-        detalhes: error.message
-    }));
-}
+});
