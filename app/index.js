@@ -1,22 +1,32 @@
 try {
-    console.log("--- Payment System Status: BOOTING ---");
+    // 1. Log de Início
+    console.log(JSON.stringify({ 
+        timestamp: new Date().toISOString(), 
+        level: "INFO", 
+        message: "O sistema está ligando..." 
+    }));
 
-    // Usamos o Number() para garantir que o texto "200" vire o número 200
-const amount = Number(process.env.AMOUNT) || 0;
-    
-    // Agora o código busca 'CURRENCY' do ambiente. 
-    // Se não encontrar, ele falha (o que vai disparar nosso Catch)
-    const currency = process.env.CURRENCY; 
+    const amount = Number(process.env.AMOUNT) || 0;
+    const currency = process.env.CURRENCY;
 
     if (!currency) {
-        throw new Error("Environment variable 'CURRENCY' is missing!");
+        throw new Error("Variável CURRENCY não foi encontrada!");
     }
 
-    console.log(`Processing payment of: ${amount} ${currency}`);
+    // 2. Log de Sucesso (Formulário preenchido)
+    console.log(JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: "INFO",
+        message: "Pagamento processado com sucesso",
+        data: { valor: amount, moeda: currency }
+    }));
 
 } catch (error) {
-    console.log("[SRE ALERT] The system caught an error!");
-    console.log(`Error details: ${error.message}`);
-} finally {
-    console.log("Cleaning up resources... System remains online.");
+    // 3. Log de Erro (Caso algo falhe)
+    console.log(JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: "ERROR",
+        message: "Falha no pagamento",
+        detalhes: error.message
+    }));
 }
